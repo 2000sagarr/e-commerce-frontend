@@ -1,4 +1,4 @@
-import Navigation from "./customer/components/navigation/Navigation";
+import Navigation from "./customer/components/navigation/Navigation.jsx";
 import Home from "./customer/pages/Home";
 
 function App() {
