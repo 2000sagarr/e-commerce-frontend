@@ -12,7 +12,7 @@ const HomeSectionCard = ({ product }) => {
           sx={{ height: "20rem", objectFit: "cover", objectPosition: "top" }}
         />
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h6" component="div">
+          <Typography  variant="h6" component="div">
             {product.brand}
           </Typography>
           <Typography variant="body2" color="text.secondary">

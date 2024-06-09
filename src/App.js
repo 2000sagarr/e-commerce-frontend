@@ -1,4 +1,5 @@
 import Navigation from "./customer/components/navigation/Navigation.jsx";
+import Product from "./customer/components/product/Product.jsx";
 import Home from "./customer/pages/Home";
 
 function App() {
@@ -6,7 +7,9 @@ function App() {
     <div className="">
       <Navigation />
       <div>
-        <Home />
+        <Product />
+
+        {/* <Home /> */}
       </div>
     </div>
   );
