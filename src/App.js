@@ -1,3 +1,4 @@
+import Cart from "./customer/components/cart/Cart.jsx";
 import Footer from "./customer/components/footer/Footer.jsx";
 import Navigation from "./customer/components/navigation/Navigation.jsx";
 import Product from "./customer/components/product/Product.jsx";
@@ -10,10 +11,11 @@ function App() {
       <Navigation />
       <div>
         {/* <Product /> */}
-        <ProductDetails />
+        {/* <ProductDetails /> */}
         {/* <Home /> */}
-        <Footer />
+        <Cart />
       </div>
+      <Footer />
     </div>
   );
 }

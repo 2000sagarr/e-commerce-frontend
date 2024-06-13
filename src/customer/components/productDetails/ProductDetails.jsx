@@ -5,6 +5,7 @@ import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/mens_kurta";
 import HomeSectionCard from "../homeSectionCard/HomeSectionCard";
+import ProductCard from "../product/ProductCard";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -314,9 +315,9 @@ export default function ProductDetails() {
         {/* similer product */}
         <section className="px-10 pt-10">
           <h1 className="py-5 text-xl font-bold">Similer Products</h1>
-          <div className="flex flex-wrap space-y-5">
+          <div className="flex flex-wrap justify-around space-y-5">
             {mens_kurta.map((item) => (
-              <HomeSectionCard product={item} />
+              <ProductCard product={item} />
             ))}
           </div>
         </section>
