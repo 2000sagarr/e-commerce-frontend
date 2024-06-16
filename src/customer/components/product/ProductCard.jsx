@@ -1,7 +1,7 @@
 import React from "react";
 import "./ProductCard.css";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
-// import{useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   //   const {
@@ -17,8 +17,9 @@ const ProductCard = ({ product }) => {
 
   // console.log("product",product)
 
+  const navigate = useNavigate();
   const handleNavigate = () => {
-    // navigate(`/product/${product?.id || product?._id || 2}`)
+    navigate(`/product/${product?.id || product?._id || 2}`);
   };
 
   return (

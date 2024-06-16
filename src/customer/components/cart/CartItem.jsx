@@ -2,6 +2,7 @@ import { Button, IconButton } from "@mui/material";
 import React from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+
 const CartItem = () => {
   const handleRemoveItemFromCart = () => {
     // const data = { cartItemId: item?.id, jwt };
