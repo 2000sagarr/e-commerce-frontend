@@ -25,21 +25,15 @@ const CustomerRoutes = () => {
       {showNavigation && <Navigation />}
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Home />}></Route>
+        <Route path="/register" element={<Home />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
-        <Route
-          path="/:lavelOne/:lavelTwo/:lavelThree"
-          element={<Product />}
-        ></Route>
+        <Route path="/:lavelOne/:lavelTwo/:lavelThree" element={<Product />}></Route>
         <Route path="/product/:productId" element={<ProductDetails />}></Route>
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route path="/account/order" element={<Order />}></Route>
-        <Route
-          path="/account/order/:orderId"
-          element={<OrderDetails />}
-        ></Route>
-
-        {/* <Route path="/login" element={<Homepage />}></Route> */}
-        {/* <Route path="/register" element={<Homepage />}></Route> */}
+        <Route path="/account/order/:orderId" element={<OrderDetails />}></Route>
+        
         {/* <Route path="/products/search" element={<SearchProduct/>}></Route> */}
         {/* <Route path="/home" element={<Homepage />}></Route> */}
         {/* <Route path="/about" element={<About />}></Route> */}
