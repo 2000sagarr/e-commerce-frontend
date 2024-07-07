@@ -1,25 +1,27 @@
 import { Alert, Button, Grid, Snackbar, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUser, login } from "../../state/auth/action";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  //   const dispatch = useDispatch();
-  //   const jwt = localStorage.getItem("jwt");
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt");
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  //   const { auth } = useSelector((store) => store);
+    const { auth } = useSelector((store) => store);
 
   const handleCloseSnakbar = () => setOpenSnackBar(false);
 
-//   useEffect(() => {
-//     // if (jwt) {
-//     //   dispatch(getUser(jwt));
-//     // }
-//   }, [jwt]);
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt]);
 
-//   useEffect(() => {
-//     if (auth.user || auth.error) setOpenSnackBar(true);
-//   }, [auth.user]);
+  useEffect(() => {
+    if (auth.user || auth.error) setOpenSnackBar(true);
+  }, [auth.user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -31,7 +33,7 @@ const LoginForm = () => {
     };
     console.log("login user", userData);
 
-    // dispatch(login(userData));
+    dispatch(login(userData));
   };
 
   return (
@@ -95,8 +97,8 @@ const LoginForm = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          {true ? "Register Success" : ""}
-        </Alert>
+          {auth.error?auth.error:auth.user?"Register Success":""}
+          </Alert>
       </Snackbar>
     </React.Fragment>
   );

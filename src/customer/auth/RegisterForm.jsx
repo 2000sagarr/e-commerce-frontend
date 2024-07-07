@@ -1,25 +1,37 @@
-import { Alert, Button, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Snackbar,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUser, register } from "../../state/auth/action";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [openSnackBar, setOpenSnackBar] = useState(false);
-//   const { auth } = useSelector((store) => store);
+  const { auth } = useSelector((store) => store);
   const handleClose = () => setOpenSnackBar(false);
 
-//   const jwt = localStorage.getItem("jwt");
+  const jwt = localStorage.getItem("jwt");
 
-//   useEffect(() => {
-//     // if (jwt) {
-//     //   dispatch(getUser(jwt));
-//     // }
-//   }, [jwt]);
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt]);
 
-//   useEffect(() => {
-//     if (auth.user || auth.error) setOpenSnackBar(true);
-//   }, [auth.user]);
+  useEffect(() => {
+    if (auth.user || auth.error) setOpenSnackBar(true);
+  }, [auth.user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,7 +45,7 @@ const RegisterForm = () => {
       role: data.get("role"),
     };
     console.log("user data", userData);
-    // dispatch(register(userData));
+    dispatch(register(userData));
   };
 
   return (
@@ -130,7 +142,7 @@ const RegisterForm = () => {
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          {true ? "Register Success" : ""}
+          {auth.error ? auth.error : auth.user ? "Register Success" : ""}
         </Alert>
       </Snackbar>
     </div>

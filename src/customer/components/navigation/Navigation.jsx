@@ -23,6 +23,8 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import { navigation } from "./navigationdata";
 import AuthModal from "../../auth/AuthModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, logout } from "../../../state/auth/action";
 // import { getUser, logout } from "../../../Redux/Auth/Action";
 // import { getCart } from "../../../Redux/Customers/Cart/Action";
 // import TextField from "@mui/material/TextField";
@@ -34,20 +36,20 @@ function classNames(...classes) {
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
-  // const { auth, cart } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const { auth, cart } = useSelector((store) => store);
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
-  // const jwt = localStorage.getItem("jwt");
-  // const location = useLocation();
+  const jwt = localStorage.getItem("jwt");
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   if (jwt) {
-  //     dispatch(getUser(jwt));
-  //     dispatch(getCart(jwt));
-  //   }
-  // }, [jwt]);
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt));
+      // dispatch(getCart(jwt));
+    }
+  }, [jwt]);
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,24 +70,24 @@ export default function Navigation() {
     close();
   };
 
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     handleClose();
-  //   }
-  //   if (location.pathname === "/login" || location.pathname === "/register") {
-  //     navigate(-1);
-  //   }
-  // }, [auth.user]);
+  useEffect(() => {
+    if (auth.user) {
+      handleClose();
+    }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate(-1);
+    }
+  }, [auth.user]);
 
   const handleLogout = () => {
-    // handleCloseUserMenu();
-    // dispatch(logout());
+    handleCloseUserMenu();
+    dispatch(logout());
   };
   const handleMyOrderClick = () => {
     // handleCloseUserMenu();
     // auth.user?.role === "ROLE_ADMIN"
     //   ? navigate("/admin")
-    //   : 
+    //   :
     navigate("/account/order");
   };
 
@@ -417,7 +419,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {false ? (
+                  {auth.user ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -432,7 +434,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                        S
+                        {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
                       {/* <Button
                         id="basic-button"
