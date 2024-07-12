@@ -4,18 +4,17 @@ import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
-  //   const {
-  //     title,
-  //     brand,
-  //     imageUrl,
-  //     price,
-  //     discountedPrice,
-  //     color,
-  //     discountPersent,
-  //   } = product;
-  //   const navigate= useNavigate();
+  const {
+    title,
+    brand,
+    imageUrl,
+    price,
+    discountedPrice,
+    color,
+    discountPersent,
+  } = product;
 
-  // console.log("product",product)
+  console.log("product",product)
 
   const navigate = useNavigate();
   const handleNavigate = () => {
@@ -31,29 +30,29 @@ const ProductCard = ({ product }) => {
         <CardMedia
           component="img"
           alt={"Product image"}
-          image={product.imageUrl}
+          image={imageUrl}
           sx={{ height: "20rem", objectFit: "cover", objectPosition: "top" }}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <div className="textPart">
             <Typography variant="h6" component="div">
-              {product.brand}
+              {brand}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {product.title}
+              {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {product.color}
+              {color}
             </Typography>
             <div className="flex space-x-3 items-center">
               <Typography className="font-semibold">
-                ₹{product.price}
+                ₹{discountedPrice}
               </Typography>
               <Typography className="opacity-50 line-through">
-                ₹{product.discountedPrice}
+                ₹{price}
               </Typography>
               <Typography className="text-green-600 font-semibold">
-                {product.discountPersent}% off
+                {discountPersent}% off
               </Typography>
             </div>
           </div>

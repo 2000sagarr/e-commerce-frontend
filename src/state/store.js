@@ -2,6 +2,10 @@ import {applyMiddleware, combineReducers, legacy_createStore} from "redux"
 // import thunk from "redux-thunk";
 import authReducer from "./auth/reducer";
 import { thunk } from "redux-thunk";
+import customerProductReducer from "./customers/Product/Reducer";
+import cartReducer from "./customers/Cart/Reducer";
+import { orderReducer } from "./customers/Order/Reducer";
+import ReviewReducer from "./customers/Review/Reducer";
 
 
 
@@ -11,12 +15,12 @@ import { thunk } from "redux-thunk";
 const rootReducers=combineReducers({
 
     auth:authReducer,
-    // customersProduct:customerProductReducer,
-    // cart:cartReducer,
-    // order:orderReducer,
-    // review:ReviewReducer,
+    customersProduct:customerProductReducer,
+    cart:cartReducer,
+    order:orderReducer,
+    review:ReviewReducer,
 
-    // // admin
+    // // adminD
     // adminsProduct:productReducer,
     // adminsOrder:adminOrderReducer,
 

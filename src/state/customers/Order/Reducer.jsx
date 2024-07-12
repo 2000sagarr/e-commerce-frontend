@@ -25,12 +25,14 @@ import {
         };
       case CREATE_ORDER_SUCCESS:
         return {
+          ...state,
           loading: false,
           success: true,
           order: action.payload,
         };
       case CREATE_ORDER_FAILURE:
         return {
+          ...state,
           loading: false,
           error: action.payload,
         };
@@ -40,6 +42,7 @@ import {
         };
       case GET_ORDER_BY_ID_SUCCESS:
         return {
+          ...state,
           loading: false,
           order: action.payload,
         };

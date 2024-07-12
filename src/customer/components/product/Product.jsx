@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -24,14 +24,19 @@ import { mens_kurta } from "../../../Data/mens_kurta";
 import ProductCard from "./ProductCard";
 import { filters, singleFilter } from "./FilterData";
 import {
+  Backdrop,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormLabel,
+  Pagination,
   Radio,
   RadioGroup,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { findProducts } from "../../../state/customers/Product/Action";
+import { useDispatch, useSelector } from "react-redux";
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -44,7 +49,22 @@ function classNames(...classes) {
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { customersProduct } = useSelector((store) => store);
+  const param = useParams();
   const location = useLocation();
+  const [isLoaderOpen, setIsLoaderOpen] = useState(false);
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+  const colorValue = searchParams.get("color");
+  const sizeValue = searchParams.get("size");
+  const price = searchParams.get("price");
+  const disccount = searchParams.get("disccout");
+  const sortValue = searchParams.get("sort");
+  const pageNumber = searchParams.get("page") || 1;
+  const stock = searchParams.get("stock");
 
   const handleFilter = (value, sectionId) => {
     const searchParams = new URLSearchParams(location.search);
@@ -79,6 +99,59 @@ export default function Product() {
     const query = searchParams.toString();
     navigate({ search: `?${query}` });
   };
+
+  const handleLoderClose = () => {
+    setIsLoaderOpen(false);
+  };
+
+  const handleSortChange = (value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("sort", value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+  const handlePaginationChange = (event, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page", value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+
+  useEffect(() => {
+    const [minPrice, maxPrice] =
+      price === null ? [0, 0] : price.split("-").map(Number);
+    const data = {
+      category: param.lavelThree,
+      colors: colorValue || [],
+      sizes: sizeValue || [],
+      minPrice: minPrice || 0,
+      maxPrice: maxPrice || 10000,
+      minDiscount: disccount || 0,
+      sort: sortValue || "price_low",
+      pageNumber: pageNumber - 1,
+      pageSize: 10,
+      stock: stock,
+    };
+    dispatch(findProducts(data));
+  }, [
+    param.lavelThree,
+    colorValue,
+    sizeValue,
+    price,
+    disccount,
+    sortValue,
+    pageNumber,
+    stock,
+  ]);
+
+  useEffect(() => {
+    if (customersProduct.loading) {
+      setIsLoaderOpen(true);
+    } else {
+      setIsLoaderOpen(false);
+    }
+  }, [customersProduct.loading]);
+
   return (
     <div className="bg-white">
       <div>
@@ -222,6 +295,7 @@ export default function Product() {
                           {({ focus }) => (
                             <a
                               href={option.href}
+                              onClick={() => handleSortChange(option.query)}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -396,7 +470,7 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5 ">
-                  {mens_kurta.map((item) => {
+                  {customersProduct?.products?.content?.map((item) => {
                     return <ProductCard product={item} />;
                   })}
                 </div>
@@ -404,6 +478,29 @@ export default function Product() {
             </div>
           </section>
         </main>
+
+        {/* pagination section */}
+        <section className="w-full px-[3.6rem]">
+          <div className="mx-auto px-4 py-5 flex justify-center shadow-lg border rounded-md">
+            <Pagination
+              count={customersProduct.products?.totalPages}
+              color="primary"
+              className=""
+              onChange={handlePaginationChange}
+            />
+          </div>
+        </section>
+
+        {/* {backdrop} */}
+        <section>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={isLoaderOpen}
+            onClick={handleLoderClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </section>
       </div>
     </div>
   );
