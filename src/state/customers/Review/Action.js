@@ -1,6 +1,7 @@
 
 
 
+import api from '../../../config/apiConfig';
 import {
     CREATE_REVIEW_SUCCESS,
     CREATE_REVIEW_FAILURE,
@@ -11,7 +12,6 @@ import {
     GET_ALL_RATINGS_SUCCESS,
     GET_ALL_RATINGS_FAILURE
   } from './ActionTyp';
-import api from '../../../config/api';
 
 export const createReview = (resData) => {
   console.log("create review req ",resData)

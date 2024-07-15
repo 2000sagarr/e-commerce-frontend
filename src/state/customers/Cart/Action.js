@@ -1,7 +1,6 @@
 import axios from "axios";
 
 
-import { API_BASE_URL } from "../../../config/api";
 import {
     ADD_ITEM_TO_CART_REQUEST,
     ADD_ITEM_TO_CART_SUCCESS,
@@ -16,6 +15,7 @@ import {
   UPDATE_CART_ITEM_REQUEST,
   UPDATE_CART_ITEM_SUCCESS,
 } from "./ActionType";
+import { API_BASE_URL } from "../../../config/apiConfig";
 
 export const addItemToCart = (reqData) => async (dispatch) => {
     console.log("req data ",reqData)
