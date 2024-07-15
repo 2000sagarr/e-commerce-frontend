@@ -4,39 +4,42 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AddressCard from "../addressCard/AddressCard";
 import CartItem from "../cart/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrderById } from "../../../state/customers/Order/Action";
+import { createPayment } from "../../../state/customers/Payment/Action";
 
 const OrderSummary = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-//   const orderId = searchParams.get("order_id");
-  // const dispatch=useDispatch();
-  //   const jwt=localStorage.getItem("jwt");
-//   const { order } = useSelector((state) => state);
+  const orderId = searchParams.get("order_id");
+  const dispatch=useDispatch();
+    const jwt=localStorage.getItem("jwt");
+  const { order } = useSelector((state) => state);
 
-//   console.log("orderId ", order.order);
+  console.log("orderId ", order.order);
 
-//   useEffect(() => {
-//     //   dispatch(getOrderById(orderId))
-//   }, [orderId]);
+  useEffect(() => {
+      dispatch(getOrderById(orderId))
+  }, [orderId]);
 
   const handleCreatePayment = () => {
-    //   const data={orderId:order.order?.id,jwt}
-    //   dispatch(createPayment(data))
+      const data={orderId:order.order?.id,jwt}
+      dispatch(createPayment(data))
   };
 
   return (
     <div className="space-y-5">
       <div className="p-5 shadow-lg rounded-md border ">
-        <AddressCard />
+        <AddressCard address={order.order?.shippingAddress}/>
       </div>
       <div>
       <div className="lg:grid grid-cols-3 relative">
         <div className="lg:col-span-2 bg-white">
           <div className=" space-y-3">
-            {[1, 1, 1].map((item) => (
+          {order.order?.orderItems.map((item) => (
               <>
-                <CartItem item={item} showButton={true} />
+                <CartItem item={item} showButton={false}/>
               </>
             ))}
           </div>
@@ -47,12 +50,12 @@ const OrderSummary = () => {
             <hr />
             <div className="space-y-3 font-semibold">
               <div className="flex justify-between pt-3 text-black ">
-                <span>Price (5 item)</span>
-                <span>₹100</span>
+                <span>Price ({order.order?.totalItem} item)</span>
+                <span>₹{order.order?.totalPrice}</span>
               </div>
               <div className="flex justify-between">
                 <span>Discount</span>
-                <span className="text-green-700">-₹20</span>
+                <span className="text-green-700">-₹{order.order?.discounte}</span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Charges</span>
@@ -61,17 +64,17 @@ const OrderSummary = () => {
               <hr />
               <div className="flex justify-between font-bold text-lg">
                 <span>Total Amount</span>
-                <span className="text-green-700">₹100</span>
+                <span className="text-green-700">₹{order.order?.totalDiscountedPrice}</span>
               </div>
             </div>
 
             <Button
-              // onClick={() => navigate("/checkout?step=2")}
+              onClick={handleCreatePayment}
               variant="contained"
               type="submit"
               sx={{ padding: ".8rem 2rem", marginTop: "2rem", width: "100%" }}
             >
-              Check Out
+             Payment
             </Button>
           </div>
         </div>

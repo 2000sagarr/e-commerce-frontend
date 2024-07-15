@@ -1,8 +1,17 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AddressCard from "../addressCard/AddressCard";
+import { createOrder } from "../../../state/customers/Order/Action";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const AddDeliveryAddressForm = () => {
+const AddDeliveryAddressForm = ({ handleNext }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { auth } = useSelector((store) => store);
+  const [selectedAddress, setSelectedAdress] = useState([]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -16,31 +25,40 @@ const AddDeliveryAddressForm = () => {
       zipCode: data.get("zip"),
       mobile: data.get("phoneNumber"),
     };
-    // dispatch(createOrder({ address, jwt, navigate }));
-    // // after perfoming all the opration
-    // handleNext();
+    dispatch(createOrder({ address, jwt, navigate }));
+    // after perfoming all the opration
+    handleNext();
+  };
+
+  const handleCreateOrder = (item) => {
+    dispatch(createOrder({ address: item, jwt, navigate }));
+    handleNext();
   };
 
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} lg={5}>
         <Box className="border rounded-md shadow-md h-[30.5rem] overflow-y-scroll ">
-          <div
-            //   onClick={() => setSelectedAdress(item)}
-            className="p-5 py-7 border-b cursor-pointer"
-          >
-            <AddressCard />
-
-            <Button
-              sx={{ mt: 2 }}
-              size="large"
-              variant="contained"
-              color="primary"
-              //   onClick={()=>handleCreateOrder(item)}
+          {auth.user?.address.map((item) => (
+            <div
+              onClick={() => setSelectedAdress(item)}
+              className="p-5 py-7 border-b cursor-pointer"
             >
-              Deliverd Here
-            </Button>
-          </div>
+              {" "}
+              <AddressCard address={item} />
+              {selectedAddress?.id === item.id && (
+                <Button
+                  sx={{ mt: 2 }}
+                  size="large"
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleCreateOrder(item)}
+                >
+                  Deliverd Here
+                </Button>
+              )}
+            </div>
+          ))}
         </Box>
       </Grid>
 
