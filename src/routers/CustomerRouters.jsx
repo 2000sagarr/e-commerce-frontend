@@ -12,6 +12,7 @@ import Cart from "../customer/components/cart/Cart.jsx";
 import Checkout from "../customer/components/checkout/Checkout.jsx";
 import Order from "../customer/components/order/Order.jsx";
 import OrderDetails from "../customer/components/order/OrderDetails.jsx";
+import PaymentSuccess from "../customer/components/payment/PaymentSuccess.jsx";
 
 const CustomerRoutes = () => {
   const location = useLocation();
@@ -33,7 +34,8 @@ const CustomerRoutes = () => {
         <Route path="/checkout" element={<Checkout />}></Route>
         <Route path="/account/order" element={<Order />}></Route>
         <Route path="/account/order/:orderId" element={<OrderDetails />}></Route>
-        
+        <Route path="/payment/:orderId" element={<PaymentSuccess />}></Route>
+
         {/* <Route path="/products/search" element={<SearchProduct/>}></Route> */}
         {/* <Route path="/home" element={<Homepage />}></Route> */}
         {/* <Route path="/about" element={<About />}></Route> */}
@@ -41,7 +43,6 @@ const CustomerRoutes = () => {
         {/* <Route path="/terms-condition" element={<TearmsCondition />}></Route> */}
         {/* <Route path="/contact" element={<Contact />}></Route> */}
         {/* <Route path="/account/rate/:productId" element={<RateProduct />}></Route> */}
-        {/* <Route path="/payment/:orderId" element={<PaymentSuccess />}></Route> */}
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
       <Footer />
