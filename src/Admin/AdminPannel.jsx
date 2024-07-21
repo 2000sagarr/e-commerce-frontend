@@ -34,9 +34,6 @@ const menu = [
   {name:"Products",path:"/admin/products"},
   {name:"Customers",path:"/admin/customers"},
   {name:"Orders",path:"/admin/orders"},
-  {name:"Total Earnings",path:"/admin"},
-  {name:"Weekly Overview",path:"/admin"},
-  {name:"Monthly Overview",path:"/admin"},
   {name:"Add Product",path:"/admin/product/create"},
 ];
 
@@ -64,20 +61,6 @@ export default function AdminPannel() {
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-
-      <List sx={{ position: "absolute", bottom: 0, width: "100%" }}>
-        <Divider />
-        {["Account", "Request"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
