@@ -19,14 +19,15 @@ const HomeCarousel = () => {
     />
   ));
   return (
-    <AliceCarousel
-      mouseTracking
-      items={item}
-      autoPlay
-      infinite
-      autoPlayInterval={2000}
-      disableButtonsControls
-    />
+      <AliceCarousel
+        mouseTracking
+        autoHeight={true}
+        items={item}
+        autoPlay
+        infinite
+        autoPlayInterval={2000}
+        disableButtonsControls
+      />
   );
 };
 
