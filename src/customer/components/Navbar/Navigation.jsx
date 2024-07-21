@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deepPurple } from "@mui/material/colors";
 import { getUser, logout } from "../../../Redux/Auth/Action";
 import { getCart } from "../../../Redux/Customers/Cart/Action";
-import TextField from "@mui/material/TextField";
+import logo from "../../../logo.jpg";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -246,10 +246,6 @@ export default function Navigation() {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
-        </p>
-
         <nav aria-label="Top" className="mx-auto">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center px-11">
@@ -266,11 +262,7 @@ export default function Navigation() {
               <div className="ml-4 flex lg:ml-0">
                 <Link to="/">
                   <span className="sr-only">Your Company</span>
-                  <img
-                    src="https://res.cloudinary.com/ddkso1wxi/image/upload/v1675919455/Logo/Copy_of_Zosh_Academy_nblljp.png"
-                    alt="Shopwithzosh"
-                    className="h-8 w-8 mr-2"
-                  />
+                  <img src={logo} alt="Shopwithzosh" className="h-8 w-8 mr-2" />
                 </Link>
               </div>
 
@@ -425,15 +417,7 @@ export default function Navigation() {
                       >
                         {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
-                      {/* <Button
-                        id="basic-button"
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        onClick={handleUserClick}
-                      >
-                        Dashboard
-                      </Button> */}
+
                       <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -459,19 +443,6 @@ export default function Navigation() {
                       Signin
                     </Button>
                   )}
-                </div>
-
-                {/* Search */}
-                <div className="flex items-center lg:ml-6">
-                
-                  <p onClick={()=>navigate("/products/search")} className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
-                  </p>
                 </div>
 
                 {/* Cart */}
